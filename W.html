@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MausamPK - Pakistan Weather Today, Hourly and 7-Day Forecast</title>
+<meta name="description" content="Live weather for any city or town in Pakistan, from Karachi to Skardu. Current temperature, hourly and 7-day forecast in English and Urdu.">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1541172780085560" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600&family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef3f8;--card:#fff;--ink:#102033;--mute:#5d6f82;--line:#d9e2ec;--acc:#1b6ef3;--acc-t:#e3edff}
+@media (prefers-color-scheme:dark){:root{--bg:#0c131b;--card:#152130;--ink:#e9f0f7;--mute:#92a4b6;--line:#243446;--acc:#6aa2ff;--acc-t:#1b2c4a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 Outfit,system-ui,sans-serif}
+html[lang=ur] body{font-family:"Noto Nastaliq Urdu",Outfit,sans-serif;line-height:2}
+h1,h2,h3{line-height:1.2;margin:0 0 .5em;font-weight:700}
+html[lang=ur] h1,html[lang=ur] h2,html[lang=ur] h3{line-height:1.8}
+a{color:var(--acc)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px}
+header{background:var(--card);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 18px}
+.logo{font-weight:700;font-size:22px;color:var(--ink);text-decoration:none;margin-inline-end:auto}
+.logo b{color:var(--acc)}
+.sw{position:relative;flex:1;min-width:190px;max-width:340px}
+#q{width:100%;font:500 15px Outfit,sans-serif;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+html[lang=ur] #q{font-family:"Noto Nastaliq Urdu",sans-serif}
+#res{position:absolute;top:100%;inset-inline:0;background:var(--card);border:1px solid var(--line);border-radius:10px;z-index:9;margin-top:4px;overflow:hidden}
+#res:empty{display:none}
+#res button{display:block;width:100%;text-align:start;border:0;background:none;padding:9px 12px;font:inherit;color:var(--ink);cursor:pointer}
+#res button:hover{background:var(--acc-t)}
+#res small{color:var(--mute)}
+select,.btn{font:500 15px Outfit,sans-serif;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);cursor:pointer}
+html[lang=ur] select,html[lang=ur] .btn{font-family:"Noto Nastaliq Urdu",sans-serif}
+.btn:hover{border-color:var(--acc)}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.hero{border-radius:20px;color:#fff;padding:28px;margin:20px 0;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;background:linear-gradient(135deg,#2a7de1,#6cc1ff)}
+.hero[data-sky=night]{background:linear-gradient(135deg,#0b1c3d,#2b4585)}
+.hero[data-sky=cloud]{background:linear-gradient(135deg,#566b84,#8a9db3)}
+.hero[data-sky=rain]{background:linear-gradient(135deg,#2f4258,#587490)}
+.hero[data-sky=storm]{background:linear-gradient(135deg,#262b42,#4b5272)}
+.hero[data-sky=snow]{background:linear-gradient(135deg,#6f89a4,#aac0d4)}
+.hero h1{font-size:clamp(24px,4vw,34px);margin:0}
+.hero .d{opacity:.85;font-size:15px}
+.temp{font-size:clamp(70px,13vw,112px);font-weight:500;line-height:1;margin:8px 0;direction:ltr;display:inline-block}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.chip{background:rgba(255,255,255,.18);padding:4px 12px;border-radius:99px;font-size:15px}
+.big svg{width:clamp(110px,20vw,170px);height:auto}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.stat small{display:block;color:var(--mute);font-size:14px}
+.stat b{font-size:22px;font-weight:500;direction:ltr;display:inline-block}
+section{margin:30px 0}
+.hourly{display:flex;gap:6px;overflow-x:auto;padding:12px}
+.hr{flex:0 0 66px;text-align:center;font-size:15px}
+.hr svg{width:36px;height:36px}
+.hr em{display:block;font-style:normal;color:var(--acc);font-size:13px;min-height:20px}
+.day{display:grid;grid-template-columns:70px 36px 48px 40px 1fr 40px;gap:8px;align-items:center;padding:9px 16px;border-bottom:1px solid var(--line);direction:ltr}
+html[lang=ur] .day{direction:rtl}
+.day:last-child{border:0}
+.day svg{width:32px;height:32px}
+.day .r{color:var(--acc);font-size:13px}
+.bar{height:6px;border-radius:9px;background:var(--line);position:relative;direction:ltr}
+.bar i{position:absolute;top:0;bottom:0;border-radius:9px;background:linear-gradient(90deg,#5bb3ff,#ffb34d)}
+.cities{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.cities button{display:flex;align-items:center;justify-content:space-between;gap:6px;text-align:start;font:inherit;color:var(--ink);cursor:pointer}
+.cities button:hover{border-color:var(--acc)}
+.cities svg{width:30px;height:30px}
+.cities b{font-weight:500;direction:ltr}
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.tips p{color:var(--mute);margin:0;font-size:16px}
+.ad{min-height:90px;border:1px dashed var(--line);border-radius:10px;display:grid;place-items:center;color:var(--mute);font-size:14px;margin:24px 0}
+.msg{padding:30px;text-align:center;color:var(--mute)}
+.info p{max-width:72ch}
+footer{background:var(--card);border-top:1px solid var(--line);padding:24px 0;color:var(--mute);font-size:15px;margin-top:30px}
+@media(max-width:560px){.day{grid-template-columns:56px 30px 40px 34px 1fr 34px;gap:5px;padding:9px 10px}.hero{padding:20px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<a class="logo" href="./">Mausam<b>PK</b></a>
+<div class="sw"><input id="q" type="search" autocomplete="off" aria-label="Search"><div id="res"></div></div>
+<select id="city" aria-label="City"></select>
+<button class="btn" id="loc" data-i="loc"></button>
+<button class="btn" id="lang">اردو</button>
+</div></header>
+
+<main class="wrap">
+<div id="hero" class="hero" data-sky="day"><div class="msg" data-i="load"></div></div>
+<div class="stats" id="stats"></div>
+
+
+<section><h2 data-i="hr"></h2><div class="card hourly" id="hourly"></div></section>
+<section><h2 data-i="dy"></h2><div class="card" id="daily" style="padding:6px 0"></div></section>
+
+
+<section><h2 data-i="all"></h2><div class="cities" id="cities"></div><button class="btn" id="more" style="margin-top:14px" hidden></button></section>
+
+<section class="info" id="tips"><h2>Weather tips for Pakistan</h2>
+<div class="tips">
+<div class="card"><h3>Staying safe in a heatwave</h3><p>Drink water often, avoid going out between noon and 4 PM, wear light cotton clothes and check on elderly neighbours. Headache, dizziness and very hot dry skin are warning signs that need medical help.</p></div>
+<div class="card"><h3>Getting ready for monsoon</h3><p>Clear drains near your home, keep a torch and power bank ready, avoid low-lying roads during heavy rain and never touch fallen electric wires. Check the 7-day forecast before travelling to the north.</p></div>
+<div class="card"><h3>Winter fog on motorways</h3><p>Dense fog often closes parts of the motorway in December and January. Use low-beam headlights, keep a safe gap and check the hourly forecast, since fog is usually thickest from midnight to early morning.</p></div>
+<div class="card"><h3>Visiting the northern areas</h3><p>Weather in Murree, Swat, Gilgit and Skardu can change within hours. Carry warm layers even in summer, and look at the rain chance and temperature range before you set out.</p></div>
+</div></section>
+
+<section class="info" id="about"><h2>About MausamPK</h2>
+<p>MausamPK gives clear, fast weather for Pakistani cities in English and Urdu. We show the current conditions, an hourly outlook for the next day and a seven-day forecast, with no sign-up needed. Forecasts are model predictions and can change, so use them as a guide and follow official alerts from the Pakistan Meteorological Department during severe weather.</p></section>
+
+<section class="info" id="privacy"><h2>Privacy Policy</h2>
+<p>We do not ask for your name or account details. If you press "My location", your browser shares coordinates only to fetch the forecast, and we do not store them. Your chosen city and language are saved in your own browser. This site uses Google AdSense; Google and its partners may use cookies to show ads based on your visits to this and other sites. You can manage ad personalization at <a href="https://adssettings.google.com" rel="noopener">adssettings.google.com</a>. By using this site you agree to this use of cookies.</p></section>
+
+<section class="info" id="contact"><h2>Contact</h2>
+<p>Feedback or questions: <a href="mailto:sigma234p@gmail.com">sigma234p@gmail.com</a></p></section>
+</main>
+
+<footer><div class="wrap">&copy; <span id="yr"></span> MausamPK. Weather data by <a href="https://open-meteo.com/" rel="noopener">Open-Meteo.com</a>. Forecasts are estimates and not an official warning service.</div></footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const ls=(k,v)=>{try{return v===undefined?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){return null}};
+$('yr').textContent=new Date().getFullYear();
+const C=[['Islamabad','اسلام آباد',33.69,73.05],['Lahore','لاہور',31.55,74.34],['Karachi','کراچی',24.86,67.01],['Rawalpindi','راولپنڈی',33.6,73.04],['Peshawar','پشاور',34.01,71.58],['Quetta','کوئٹہ',30.18,66.98],['Faisalabad','فیصل آباد',31.42,73.08],['Multan','ملتان',30.2,71.47],['Hyderabad','حیدرآباد',25.4,68.37],['Sialkot','سیالکوٹ',32.49,74.53],['Gujranwala','گوجرانوالہ',32.16,74.19],['Bahawalpur','بہاولپور',29.4,71.68],['Sargodha','سرگودھا',32.08,72.67],['Sukkur','سکھر',27.7,68.86],['Abbottabad','ایبٹ آباد',34.15,73.21],['Murree','مری',33.91,73.39],['Muzaffarabad','مظفرآباد',34.37,73.47],['Swat','سوات',34.78,72.36],['Gilgit','گلگت',35.92,74.31],['Skardu','سکردو',35.3,75.63],['Okara','اوکاڑہ',30.81,73.45],['Sahiwal','ساہیوال',30.67,73.11],['Jhang','جھنگ',31.27,72.32],['Rahim Yar Khan','رحیم یار خان',28.42,70.3],['Dera Ghazi Khan','ڈیرہ غازی خان',30.05,70.64],['Kasur','قصور',31.12,74.45],['Sheikhupura','شیخوپورہ',31.71,73.98],['Gujrat','گجرات',32.57,74.08],['Jhelum','جہلم',32.93,73.73],['Attock','اٹک',33.77,72.36],['Chakwal','چکوال',32.93,72.86],['Mianwali','میانوالی',32.58,71.54],['Vehari','وہاڑی',30.04,72.35],['Khanewal','خانیوال',30.3,71.93],['Mardan','مردان',34.2,72.04],['Kohat','کوہاٹ',33.59,71.44],['Bannu','بنوں',32.99,70.6],['Dera Ismail Khan','ڈیرہ اسماعیل خان',31.83,70.9],['Mansehra','مانسہرہ',34.33,73.2],['Chitral','چترال',35.85,71.79],['Naran','ناران',34.91,73.65],['Hunza','ہنزہ',36.32,74.66],['Mirpur AJK','میرپور آزاد کشمیر',33.15,73.75],['Rawalakot','راولاکوٹ',33.86,73.76],['Larkana','لاڑکانہ',27.56,68.21],['Nawabshah','نواب شاہ',26.25,68.41],['Mirpur Khas','میرپور خاص',25.53,69.01],['Jacobabad','جیکب آباد',28.28,68.44],['Gwadar','گوادر',25.12,62.33],['Turbat','تربت',26.0,63.05],['Khuzdar','خضدار',27.81,66.61]];
+const T={en:{feels:'Feels like',hum:'Humidity',wind:'Wind',pres:'Pressure',uv:'UV index',sr:'Sunrise',ss:'Sunset',rain:'Rain chance',hr:'Next 24 hours',dy:'7-day forecast',all:'Weather across Pakistan',loc:'My location',sp:'Search any city or town in Pakistan',more:'Show all cities',less:'Show fewer cities',nores:'No place found. Try another spelling.',now:'Now',err:'Could not load the weather. Check your internet and try again.',load:'Loading weather...',lf:'Location was blocked. Please pick a city.',uvl:['Low','Moderate','High','Very high','Extreme'],km:'km/h'},
+ur:{feels:'محسوس ہوتا ہے',hum:'نمی',wind:'ہوا',pres:'دباؤ',uv:'یو وی انڈیکس',sr:'طلوعِ آفتاب',ss:'غروبِ آفتاب',rain:'بارش کا امکان',hr:'اگلے 24 گھنٹے',dy:'7 دن کی پیشگوئی',all:'پاکستان بھر کا موسم',loc:'میری لوکیشن',sp:'پاکستان کا کوئی بھی شہر یا قصبہ تلاش کریں',more:'تمام شہر دکھائیں',less:'کم شہر دکھائیں',nores:'کوئی جگہ نہیں ملی۔ دوسری ہجے آزمائیں۔',now:'ابھی',err:'موسم لوڈ نہیں ہو سکا۔ انٹرنیٹ چیک کر کے دوبارہ کوشش کریں۔',load:'موسم لوڈ ہو رہا ہے...',lf:'لوکیشن بلاک ہے۔ براہِ کرم شہر منتخب کریں۔',uvl:['کم','درمیانہ','زیادہ','بہت زیادہ','انتہائی'],km:'کلومیٹر/گھنٹہ'}};
+const D={c:['Clear sky','صاف آسمان'],p:['Partly cloudy','جزوی ابر آلود'],o:['Cloudy','ابر آلود'],f:['Foggy','دھند'],d:['Light drizzle','ہلکی بوندا باندی'],r:['Rain','بارش'],s:['Snow','برف باری'],t:['Thunderstorm','آندھی اور بارش']};
+const grp=c=>c===0?'c':c<=2?'p':c===3?'o':c<=48?'f':c<=57?'d':c<=67?'r':c<=77?'s':c<=82?'r':c<=86?'s':'t';
+const sun=(x,y,s)=>`<g transform="translate(${x} ${y}) scale(${s})"><circle r="10" fill="#ffc93c"/><g stroke="#ffc93c" stroke-width="3" stroke-linecap="round">${[0,1,2,3,4,5,6,7].map(i=>`<line y1="-15" y2="-20" transform="rotate(${i*45})"/>`).join('')}</g></g>`;
+const moon=(x,y,s)=>`<path transform="translate(${x} ${y}) scale(${s})" d="M40 14a18 18 0 1 0 12 28A15 15 0 0 1 40 14z" fill="#e8ecf5"/>`;
+const cloud=f=>`<g fill="${f}"><circle cx="24" cy="38" r="9"/><circle cx="36" cy="32" r="12"/><circle cx="47" cy="40" r="8"/><rect x="24" y="38" width="23" height="10" rx="5"/></g>`;
+function ic(g,day){
+  let b=g==='c'?(day?sun(32,32,1.1):moon(0,0,1)):g==='p'?(day?sun(24,24,.8):moon(-6,-8,.8)):'';
+  if(g!=='c')b+=cloud(g==='p'?'#dbe4ee':'#aebccd');
+  const dr='<g stroke="#4aa3ff" stroke-width="3" stroke-linecap="round"><line x1="24" y1="53" x2="21" y2="60"/><line x1="35" y1="53" x2="32" y2="60"/><line x1="46" y1="53" x2="43" y2="60"/></g>';
+  b+={f:'<g stroke="#aebccd" stroke-width="3" stroke-linecap="round"><line x1="16" y1="54" x2="48" y2="54"/><line x1="22" y1="60" x2="54" y2="60"/></g>',d:dr.replace(/<line x1="46".*?\/>/,''),r:dr,s:'<g fill="#8fb8e8"><circle cx="24" cy="56" r="2.5"/><circle cx="35" cy="58" r="2.5"/><circle cx="46" cy="56" r="2.5"/></g>',t:'<polygon points="36,46 27,57 33,57 29,66 42,53 36,53" fill="#ffc93c"/>'}[g]||'';
+  return `<svg viewBox="0 0 64 66" aria-hidden="true">${b}</svg>`;
+}
+let ALL=false;
+let L=ls('lang')==='ur'?'ur':'en',cur=C[0],DATA=null,GRID=null;
+const q=new URLSearchParams(location.search).get('city');
+const saved=ls('city'),pick=C.find(c=>c[0].toLowerCase()===(q||saved||'').toLowerCase());if(pick)cur=pick;else{try{const x=JSON.parse(ls('cc'));if(Array.isArray(x)&&x.length===4)cur=x}catch(e){}}
+const li=()=>L==='ur'?1:0,n=x=>Math.round(x),t12=h=>`${h%12||12} ${h<12?'AM':'PM'}`;
+const tm=s=>{const h=+s.slice(11,13);return `${h%12||12}:${s.slice(14,16)} ${h<12?'AM':'PM'}`};
+const loc=()=>L==='ur'?'ur-PK':'en-GB';
+
+function applyLang(){
+  document.documentElement.lang=L;document.documentElement.dir=L==='ur'?'rtl':'ltr';
+  document.querySelectorAll('[data-i]').forEach(e=>e.textContent=T[L][e.dataset.i]);
+  $('q').placeholder=T[L].sp;$('lang').textContent=L==='ur'?'English':'اردو';
+  $('city').innerHTML=C.map((c,i)=>`<option value="${i}">${c[li()]}</option>`).join('')+(C.includes(cur)?'':`<option value="x" selected>${cur[li()]}</option>`);
+  if(C.includes(cur))$('city').value=C.indexOf(cur);
+}
+function render(){
+  if(!DATA)return;const d=DATA,c=d.current,g=grp(c.weather_code),day=!!c.is_day,t=T[L];
+  const sky=g==='r'||g==='d'?'rain':g==='t'?'storm':g==='s'?'snow':g==='o'||g==='f'?'cloud':day?'day':'night';
+  const dt=new Date(c.time);
+  $('hero').dataset.sky=sky;
+  $('hero').innerHTML=`<div><h1>${cur[li()]}</h1><div class="d">${dt.toLocaleDateString(loc(),{weekday:'long',day:'numeric',month:'long'})} - ${tm(c.time)}</div><div class="temp">${n(c.temperature_2m)}°</div><div style="font-size:22px">${D[g][li()]}</div><div class="chips"><span class="chip">${t.feels} ${n(c.apparent_temperature)}°</span><span class="chip">↑ ${n(d.daily.temperature_2m_max[0])}° ↓ ${n(d.daily.temperature_2m_min[0])}°</span></div></div><div class="big">${ic(g,day)}</div>`;
+  const uv=d.daily.uv_index_max[0],ui=uv<3?0:uv<6?1:uv<8?2:uv<11?3:4;
+  const S=[[t.hum,c.relative_humidity_2m+'%'],[t.wind,n(c.wind_speed_10m)+' '+t.km],[t.pres,n(c.pressure_msl)+' hPa'],[t.uv,n(uv)+' - '+t.uvl[ui]],[t.rain,d.daily.precipitation_probability_max[0]+'%'],[t.sr,tm(d.daily.sunrise[0])],[t.ss,tm(d.daily.sunset[0])]];
+  $('stats').innerHTML=S.map(s=>`<div class="card stat"><small>${s[0]}</small><b>${s[1]}</b></div>`).join('');
+  const i0=Math.max(0,d.hourly.time.indexOf(c.time.slice(0,13)+':00'));
+  $('hourly').innerHTML=d.hourly.time.slice(i0,i0+24).map((s,k)=>{const j=i0+k,p=d.hourly.precipitation_probability[j];
+    return `<div class="hr"><div>${k?t12(+s.slice(11,13)):t.now}</div>${ic(grp(d.hourly.weather_code[j]),d.hourly.is_day[j])}<div>${n(d.hourly.temperature_2m[j])}°</div><em>${p>=20?p+'%':''}</em></div>`}).join('');
+  const mn=Math.min(...d.daily.temperature_2m_min),mx=Math.max(...d.daily.temperature_2m_max),r=mx-mn||1;
+  $('daily').innerHTML=d.daily.time.map((s,k)=>{const lo=d.daily.temperature_2m_min[k],hi=d.daily.temperature_2m_max[k],p=d.daily.precipitation_probability_max[k];
+    return `<div class="day"><span>${k?new Date(s+'T00:00').toLocaleDateString(loc(),{weekday:'short'}):t.now==='Now'?'Today':'آج'}</span>${ic(grp(d.daily.weather_code[k]),1)}<span class="r">${p>=20?p+'%':''}</span><span>${n(lo)}°</span><div class="bar"><i style="left:${(lo-mn)/r*100}%;width:${(hi-lo)/r*100}%"></i></div><span>${n(hi)}°</span></div>`}).join('');
+  document.title=`${cur[0]} Weather Today - ${n(c.temperature_2m)}°C, 7-Day Forecast | MausamPK`;
+}
+function renderGrid(){
+  if(!GRID)return;
+  $('cities').innerHTML=C.map((c,i)=>{if(!ALL&&i>=20)return '';const w=GRID[i].current;return `<button class="card" data-c="${i}"><span>${c[li()]}</span><span style="display:flex;align-items:center;gap:4px">${ic(grp(w.weather_code),w.is_day)}<b>${n(w.temperature_2m)}°</b></span></button>`}).join('');
+  $('cities').querySelectorAll('button').forEach(b=>b.onclick=()=>{cur=C[+b.dataset.c];ls('city',cur[0]);ls('cc','');applyLang();load();scrollTo({top:0,behavior:'smooth'})});
+  $('more').hidden=false;$('more').textContent=T[L][ALL?'less':'more'];$('more').onclick=()=>{ALL=!ALL;renderGrid()};
+}
+async function load(){
+  $('hero').innerHTML=`<div class="msg">${T[L].load}</div>`;
+  try{
+    const u=`https://api.open-meteo.com/v1/forecast?latitude=${cur[2]}&longitude=${cur[3]}&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,is_day,wind_speed_10m,pressure_msl&hourly=temperature_2m,weather_code,precipitation_probability,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset,uv_index_max&timezone=Asia%2FKarachi&forecast_days=7`;
+    DATA=await (await fetch(u)).json();if(!DATA.current)throw 0;render();
+  }catch(e){$('hero').innerHTML=`<div class="msg">${T[L].err}</div>`}
+}
+async function loadGrid(){
+  try{GRID=await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${C.map(c=>c[2])}&longitude=${C.map(c=>c[3])}&current=temperature_2m,weather_code,is_day&timezone=Asia%2FKarachi`)).json();renderGrid()}catch(e){}
+}
+$('city').onchange=e=>{cur=C[+e.target.value];ls('city',cur[0]);ls('cc','');load()};
+$('lang').onclick=()=>{L=L==='en'?'ur':'en';ls('lang',L);applyLang();render();renderGrid()};
+$('loc').onclick=()=>navigator.geolocation?navigator.geolocation.getCurrentPosition(p=>{cur=['My location','میری لوکیشن',+p.coords.latitude.toFixed(2),+p.coords.longitude.toFixed(2)];applyLang();load()},()=>alert(T[L].lf)):alert(T[L].lf);
+let st;
+$('q').oninput=e=>{clearTimeout(st);const v=e.target.value.trim();if(v.length<2){$('res').innerHTML='';return}
+  st=setTimeout(async()=>{try{
+    const r=await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(v)}&count=8&language=${L}&country_code=PK`)).json();
+    $('res').innerHTML=(r.results||[]).map((p,i)=>`<button data-k="${i}">${p.name} <small>${p.admin1||''}</small></button>`).join('')||`<div class="msg" style="padding:10px">${T[L].nores}</div>`;
+    $('res').querySelectorAll('button').forEach(b=>b.onclick=()=>{const p=r.results[+b.dataset.k];cur=[p.name,p.name,+p.latitude.toFixed(2),+p.longitude.toFixed(2)];ls('cc',JSON.stringify(cur));$('res').innerHTML='';$('q').value='';applyLang();load()});
+  }catch(e){}},300)};
+document.addEventListener('click',e=>{if(!e.target.closest('.sw'))$('res').innerHTML=''});
+applyLang();load();loadGrid();
+</script>
+</body>
+</html>
